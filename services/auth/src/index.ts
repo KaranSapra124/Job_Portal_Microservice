@@ -1,5 +1,7 @@
 import app from "./app.js";
+import dotenv from "dotenv"
 
-app.listen(process.env.PORT,()=>{
-    console.log(`Server is running on ${process.env.PORT}`)
+dotenv.config()
+app.listen(process.env.PORT, () => {
+    console.log(`Auth service is running on ${process.env.PORT}`)
 })
