@@ -56,6 +56,7 @@ async function initDB() {
 }
 
 initDB().then(() => {
+    
     app.listen(process.env.PORT, () => {
         console.log(`Auth service is running on ${process.env.PORT}`)
     })
