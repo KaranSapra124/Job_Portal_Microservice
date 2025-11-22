@@ -1,9 +1,5 @@
-export const registerUser = async (req, res) => {
-    try {
-    }
-    catch (error) {
-        res.status(500).json({
-            message: error.message,
-        });
-    }
-};
+import { TryCatch } from "../utils/TryCatch.js";
+export const registerUser = TryCatch(async (req, res, next) => {
+    const { email } = req.body;
+    res.json(email);
+});
