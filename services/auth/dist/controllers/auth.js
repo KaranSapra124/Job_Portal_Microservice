@@ -7,6 +7,7 @@ import axios from "axios";
 import jwt from "jsonwebtoken";
 import { emailTemp } from "../utils/emailTemplate.js";
 import { publishToTopic } from "../producer.js";
+import { redisClient } from "../index.js";
 export const registerUser = TryCatch(async (req, res, next) => {
     const { name, email, password, phoneNumber, role, bio } = req.body;
     if (!name || !email || !password || !phoneNumber || !role || !bio) {
@@ -89,6 +90,9 @@ export const forgotPassword = TryCatch(async (req, res, next) => {
         type: "reset",
     }, process.env.JWT_SECRET, { expiresIn: "15m" });
     const resetLink = `${process.env.Frontend_Url}/reset/${resetToken}`;
+    await redisClient.set(`forgot:${email}`, resetToken, {
+        EX: 900
+    });
     const message = {
         to: email,
         subject: "Reset Your Password - HireHeaven",
@@ -98,4 +102,6 @@ export const forgotPassword = TryCatch(async (req, res, next) => {
     res.json({
         message: "If that email exists , reset link is sent!"
     });
+});
+export const resetPassword = TryCatch(async (req, res, next) => {
 });
