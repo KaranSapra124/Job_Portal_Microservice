@@ -1,14 +1,19 @@
 import express from "express";
 import dotnenv from 'dotenv'
 import routes from "./routes.js"
-import cors from "cors"
+import cors from "cors";
+import { v2 as cloudinary } from "cloudinary"
 dotnenv.config();
-
+cloudinary.config({
+    cloud_name: process.env.CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET // Click 'View API Keys' above to copy your API secret
+});
 const app = express();
 app.use(cors())
-app.use('/api/utils', routes);
 app.use(express.json({ limit: "50mb" }))
 app.use(express.urlencoded({ limit: "50mb", extended: true }))
+app.use('/api/utils', routes);
 app.listen(process.env.PORT, () => {
     console.log("Utils service is running")
 })
