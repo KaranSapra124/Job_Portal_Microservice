@@ -2,7 +2,6 @@ import express from "express";
 import cloudinary from "cloudinary";
 const router = express.Router();
 router.post('/upload', async (req, res) => {
-    console.log(req.body);
     try {
         const { buffer, public_id } = req.body;
         if (public_id) {
