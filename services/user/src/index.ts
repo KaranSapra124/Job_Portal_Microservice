@@ -6,7 +6,7 @@ dotenv.config();
 const app = express()
 
 app.use(express.json())
-app.use("/api/user",userRoutes)
+app.use("/api/user", userRoutes)
 
 app.listen(process.env.PORT, () => {
     console.log(`User service is running ${process.env.PORT}`)
