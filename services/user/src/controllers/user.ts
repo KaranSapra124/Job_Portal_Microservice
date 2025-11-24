@@ -1,4 +1,6 @@
+import axios from "axios";
 import { AuthenticatedRequest } from "../middleware/auth.js";
+import getBuffer from "../utils/buffer.js";
 import { sql } from "../utils/db.js";
 import Errorhandler from "../utils/errorHandler.js";
 import { TryCatch } from "../utils/TryCatch.js";
@@ -40,4 +42,58 @@ export const updateUserProfile = TryCatch(async (req: AuthenticatedRequest, res,
         message: "Profile Updated Successfully!",
         updatedUser
     })
+})
+
+export const updateProfilePic = TryCatch(async (req: AuthenticatedRequest, res, next) => {
+    const user = req?.user;
+
+    if (!user) {
+        throw new Errorhandler(401, "Authentication required")
+    }
+    const file = req.file;
+
+    if (!file) {
+        console.log("Error is here")
+        throw new Errorhandler(403, "No Image file provided")
+    }
+    const oldPublicId = user?.profile_pic_public_id;
+
+    const fileBuffer = getBuffer(file);
+    if (!fileBuffer || !fileBuffer?.content) {
+        throw new Errorhandler(500, "Failed to generate buffer")
+    }
+
+    const { data: uploadedRes } = await axios.post(`${process.env.UPLOAD_SERVICE}/api/utils/upload`, { buffer: fileBuffer.content, public_id: oldPublicId })
+    //@ts-expect-error dynamic errors
+    const [updatedUser] = await sql`UPDATE users SET profile_pic=${uploadedRes?.url},profile_pic_public_id=${uploadedRes?.public_id} WHERE user_id=${user?.user_id} RETURNING user_id,name,profile_pic
+`
+    res.json({ message: "Profile Pic Updated!", updatedUser })
+})
+export const updateResume = TryCatch(async (req: AuthenticatedRequest, res, next) => {
+    const user = req?.user;
+
+    if (!user) {
+        throw new Errorhandler(401, "Authentication required")
+    }
+    const file = req.file;
+
+    if (!file) {
+
+        throw new Errorhandler(403, "No pdf file provided")
+    }
+    const oldPublicId = user?.resume_public_id;
+
+    const fileBuffer = getBuffer(file);
+    if (!fileBuffer || !fileBuffer?.content) {
+        throw new Errorhandler(500, "Failed to generate buffer")
+    }
+
+    const { data: uploadedRes } = await axios.post(`${process.env.UPLOAD_SERVICE}/api/utils/upload`, { buffer: fileBuffer.content, public_id: oldPublicId })
+    //@ts-expect-error dynamic errors
+    const [updatedUser] = await sql`UPDATE users SET resume=${uploadedRes?.url},resume_public_id=${uploadedRes?.public_id} WHERE user_id=${user?.user_id} RETURNING user_id,name,resume
+`
+    res.json({ message: "Resume Updated!", updatedUser })
+})
+export const addUserSkill = TryCatch(async (req: AuthenticatedRequest, res, next) => {
+    const userId = req?.user?.user_id;
 })
