@@ -77,11 +77,33 @@ export const createJob = TryCatch(async (req: AuthenticatedRequest, res, next) =
     if (!company) {
         throw new Errorhandler(404, "Company not found!")
     }
-console.log("Here 1")
     const [newJob] = await sql`INSERT INTO jobs (title,description,salary,location,role,job_type,work_location,company_id,posted_by_recruiter_id,openings) VALUES
      (${title},${description},${salary},${location},${role},${job_type},${work_location},${company_id},${user?.user_id},${openings}) RETURNING *`
-console.log("Here 2")
-    res.json({ message: "Job posted successfully!", newJob })
+    res.json({ message: "Job posted successfully!", newJob });
+})
 
+export const updateJob = TryCatch(async (req: AuthenticatedRequest, res, next) => {
+    const user = req?.user;
+    const { jobId } = req?.params
+    if (!user) {
+        throw new Errorhandler(401, "Authentication is required")
+    }
+    if (user?.role !== 'recruiter') {
+        throw new Errorhandler(403, "Forbidden: Only recruiter can add the company")
+    }
+    const { title, description, salary, location, role, job_type, work_location, company_id, openings, is_active } = req.body;
 
+    if (!title || !description || !salary || !location || !role || !job_type || !work_location || !company_id || !is_active) {
+        throw new Errorhandler(400, "All fields are required!")
+    }
+
+    const [existingJob] = await sql`SELECT posted_by_recruiter_id FROM jobs WHERE job_id = ${jobId}`;
+    if (!existingJob) {
+        throw new Errorhandler(404, "Job not found!")
+    }
+    if (existingJob.posted_by_recruiter_id !== user?.user_id) {
+        throw new Errorhandler(403, "Forbidden: You are not allowed!")
+    }
+    const [updatedJob] = await sql`UPDATE jobs SET title = ${title},description=${description},salary=${salary},role=${role},location=${location},work_location=${work_location},job_type=${job_type},openings=${openings},company_id=${company_id},posted_by_recruiter_id=${user?.user_id},is_active=${is_active} WHERE job_id=${jobId} RETURNING *`
+    res.json({ message: "Job updated successfully!", updatedJob });
 })
