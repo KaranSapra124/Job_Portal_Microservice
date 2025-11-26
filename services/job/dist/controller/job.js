@@ -88,3 +88,34 @@ export const updateJob = TryCatch(async (req, res, next) => {
     const [updatedJob] = await sql `UPDATE jobs SET title = ${title},description=${description},salary=${salary},role=${role},location=${location},work_location=${work_location},job_type=${job_type},openings=${openings},company_id=${company_id},posted_by_recruiter_id=${user?.user_id},is_active=${is_active} WHERE job_id=${jobId} RETURNING *`;
     res.json({ message: "Job updated successfully!", updatedJob });
 });
+export const getAllCompanies = TryCatch(async (req, res, next) => {
+    const user = req?.user;
+    if (!user) {
+        throw new Errorhandler(401, "Authentication is required");
+    }
+    if (user?.role !== 'recruiter') {
+        throw new Errorhandler(403, "Forbidden: Only recruiter can add the company");
+    }
+    const [companies] = await sql `SELECT * FROM companies WHERE recruiter_id = ${user?.user_id}`;
+    res.json({ message: "Companies fetched successfully!", companies });
+});
+export const getCompanyDetails = TryCatch(async (req, res, next) => {
+    const { companyId } = req?.params;
+    const user = req?.user;
+    if (!companyId) {
+        throw new Errorhandler(400, "Company Id Is Required!");
+    }
+    console.log(companyId);
+    const [companyDetail] = await sql `SELECT c.*, COALESCE (
+    (
+    SELECT json_agg(j.*) FROM jobs j WHERE j.company_id = c.company_id
+    ),
+    '[]'::json
+) AS jobs
+ FROM companies c WHERE c.company_id = ${companyId} GROUP BY c.company_id
+    `;
+    if (!companyDetail) {
+        throw new Errorhandler(404, "Company provided not found!");
+    }
+    res.json({ message: "Company Details Fetched!", companyDetail });
+});
