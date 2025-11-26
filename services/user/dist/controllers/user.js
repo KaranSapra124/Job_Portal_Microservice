@@ -124,3 +124,51 @@ export const deleteSkillFromUser = TryCatch(async (req, res, next) => {
         message: `Skill ${skillName?.trim()} was successfully deleted!`
     });
 });
+export const applyForJob = TryCatch(async (req, res, next) => {
+    const user = req?.user;
+    if (!user) {
+        throw new Errorhandler(401, "Authentication required!");
+    }
+    if (user?.role !== "jobseeker") {
+        throw new Errorhandler(403, "Forbidden:Only jobseeker can apply for job");
+    }
+    const applicant_id = user?.user_id;
+    const resume = user?.resume;
+    if (!resume) {
+        throw new Errorhandler(400, "Resume is required!");
+    }
+    const { jobId } = req.body;
+    if (!jobId) {
+        throw new Errorhandler(400, "job id is required!");
+    }
+    const [job] = await sql `SELECT is_active FROM jobs WHERE job_id = ${jobId}`;
+    if (!job) {
+        throw new Errorhandler(404, "No jobs with provided id");
+    }
+    if (!job?.is_active) {
+        throw new Errorhandler(400, 'job is not active');
+    }
+    const now = Date.now();
+    const subTime = req?.user?.subscription ? new Date(req?.user?.subscription)?.getTime() : 0;
+    const isSubscribed = subTime > now;
+    let newApplication;
+    try {
+        [newApplication] = await sql `INSERT INTO applications (job_id,applicant_id,applicant_email,resume,subscribed) VALUES (${jobId},${applicant_id},${user?.email},${resume},${isSubscribed})`;
+    }
+    catch (err) {
+        if (err?.code === "23505") {
+            throw new Errorhandler(409, "you have already applied to this job");
+        }
+        throw err;
+    }
+    res.json({
+        message: "applied for job successfully!",
+        application: newApplication
+    });
+});
+export const getAllApplications = TryCatch(async (req, res, next) => {
+    const applications = await sql `
+    SELECT a.*, j,title AS job_title , j.salary AS job_salary , j.location AS job_location FROM applications a JOIN jobs j ON a.job_id = j.job_id WHERE a.applicant_id = ${req.user?.user_id}
+    `;
+    res.json(applications);
+});
