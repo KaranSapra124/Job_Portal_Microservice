@@ -18,7 +18,7 @@ async function initDB() {
           END IF;
         END $$
         `;
-        await sql `CREATE TABLE IF NOT EXISTS companies (
+        await sql `CREATE TABLE IF NOT EXISTS companies(
         company_id SERIAL PRIMARY KEY,
         name VARCHAR(255) NOT NULL UNIQUE,
         description TEXT NOT NULL,
