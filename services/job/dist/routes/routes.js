@@ -1,7 +1,7 @@
 import express from "express";
 import { isAuth } from "../middleware/auth.js";
 import uploadFile from "../middleware/multer.js";
-import { createCompany, createJob, deleteCompany, getActiveJobs, getAllCompanies, getCompanyDetails, getSingleJob, updateJob } from "../controller/job.js";
+import { createCompany, createJob, deleteCompany, getActiveJobs, getAllCompanies, getCompanyDetails, getSingleJob, updateApplication, updateJob } from "../controller/job.js";
 const router = express.Router();
 router.post("/company/add", isAuth, uploadFile, createCompany);
 router.delete("/company/:companyId", isAuth, deleteCompany);
@@ -11,4 +11,7 @@ router.get("/company/get-companies", isAuth, getAllCompanies);
 router.get("/company/get-company/:companyId", isAuth, getCompanyDetails);
 router.post("/company/get-active-jobs", isAuth, getActiveJobs);
 router.get("/company/get-job/:jobId", getSingleJob);
+router.get("/company/get-applications/:jobId", isAuth, getSingleJob);
+router.put("/company/update-job/:jobId", isAuth, updateJob);
+router.put("/company/update-application/:applicationId", isAuth, updateApplication);
 export default router;

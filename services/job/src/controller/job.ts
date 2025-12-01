@@ -4,6 +4,8 @@ import getBuffer from "../utils/buffer.js";
 import { sql } from "../utils/db.js";
 import Errorhandler from "../utils/errorHandler.js";
 import { TryCatch } from "../utils/TryCatch.js";
+import { applicationStatusUpdateTemplate } from "../utils/application_update_mail.js";
+import { publishToTopic } from "../producer.js";
 
 export const createCompany = TryCatch(async (req: AuthenticatedRequest, res, next) => {
     const user = req?.user;
@@ -173,4 +175,61 @@ export const getActiveJobs = TryCatch(async (req: AuthenticatedRequest, res, nex
 export const getSingleJob = TryCatch(async (req, res, next) => {
     const [job] = await sql`SELECT * FROM jobs WHERE job_id = ${req.params.jobId}`
     res.json(job)
+})
+export const getAllApplicationForJob = TryCatch(async (req: AuthenticatedRequest, res, next) => {
+    const user = req?.user;
+    const { jobId } = req?.params
+    if (!user) {
+        throw new Errorhandler(401, "Authentication is required")
+    }
+    if (user?.role !== 'recruiter') {
+        throw new Errorhandler(403, "Forbidden: Only recruiter can access this route")
+    }
+    const [job] = await sql`SELECT posted_by_recruiter_id FROM jobs WHERE job_id=${jobId} `;
+
+    if (!job) {
+        throw new Errorhandler(404, "Job Not Found!");
+    }
+    if (job?.posted_by_recruiter_id !== user?.user_id) {
+        throw new Errorhandler(403, "Forbidden:You are not allowed")
+    }
+    const applications = await sql`SELECT * FROM applications WHERE job_id = ${jobId} ORDER BY subscribed DESC, applied_at ASC`;
+
+    res.json(applications)
+})
+export const updateApplication = TryCatch(async (req: AuthenticatedRequest, res, next) => {
+    const user = req?.user;
+    if (!user) {
+        throw new Errorhandler(401, "Authentication is required")
+    }
+    if (user?.role !== 'recruiter') {
+        throw new Errorhandler(403, "Forbidden: Only recruiter can access this route")
+    }
+    const { applicationId } = req.params;
+    const [application] = await sql`SELECT * FROM applications WHERE application_id = ${applicationId}`;
+    if (!application) {
+        throw new Errorhandler(404, "Application Not Found!")
+    }
+    const [job] = await sql`SELECT posted_by_recruiter_id, title FROM jobs WHERE job_id=${application?.job_id}`;
+    if (!job) {
+        throw new Errorhandler(404, "No job with Id found!")
+    }
+    if (job?.posted_by_recruiter_id !== user?.user_id) {
+        throw new Errorhandler(403, "Forbidden:You are not allowed")
+    }
+    const [updatedApplication] = await sql`UPDATE applications SET status = ${req?.body?.status} WHERE application_id = ${applicationId} RETURNING *`;
+
+    const message = {
+        to: application?.applicant_email,
+        subject: "Application Update - Job Portal",
+        html: applicationStatusUpdateTemplate(job?.title)
+    }
+    publishToTopic("send-mail", message).catch(error => console.error("Failed to publish message to kafka", error));
+
+    res.json({
+        message: "Application Updated",
+        job,
+        updatedApplication
+    })
+
 })
