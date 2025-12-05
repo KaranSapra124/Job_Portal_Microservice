@@ -1,9 +1,14 @@
 
+import CareerGuide from '@/components/Home/Career-guide'
+import Hero from '@/components/Home/hero'
 import React from 'react'
 
 const Home = () => {
   return (
-    <div>Home</div>
+    <div>
+      <Hero/>
+      <CareerGuide/>
+    </div>
   )
 }
 
