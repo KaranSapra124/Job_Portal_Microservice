@@ -9,6 +9,7 @@ import { ArrowRight, Lock, Mail } from 'lucide-react';
 import { Label } from '@/components/ui/label';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
+import Loading from '@/components/ui/loading';
 const LoginPage = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -34,6 +35,9 @@ const LoginPage = () => {
         } finally {
             setBtnLoading(false)
         }
+    }
+    if(loading){
+        return <Loading/>
     }
     return (
         <>
