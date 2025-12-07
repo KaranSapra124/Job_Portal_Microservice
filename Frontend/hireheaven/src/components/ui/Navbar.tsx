@@ -7,13 +7,15 @@ import { Popover, PopoverTrigger } from './popover'
 import { Avatar, AvatarFallback, AvatarImage } from './avatar'
 import { PopoverContent } from './popover'
 import { ModeToggle } from '../mode-toggle'
+import { useAppData } from '@/context/appContext'
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false)
     const toggleMenu = () => {
         setIsOpen(!isOpen)
     }
-    const isAuth = false
+    const { isAuth, user, setIsAuth, setUser , loading} = useAppData()
+
     const logoutHandler = () => { }
     return (
         <nav className='z-50 sticky top-0 bg-background/80 border-b backdrop-blur-md shadow-sm'>
@@ -41,12 +43,14 @@ const Navbar = () => {
                     </div>
                     {/* Right Side Actions */}
                     <div className="hidden md:flex items-center gap-3">
-                        {isAuth ? <Popover>
+                       {
+                        loading ? "" : <>
+                         {isAuth ? <Popover>
                             <PopoverTrigger asChild>
                                 <button className='flex items-center hover:opacity-80 transition-opacity gap-2'>
                                     <Avatar className='h-9 w-9 ring-2 ring-offset-2 ring-offset-background ring-blue-500/20 cursor-pointer hover:ring-blu-500/40 transition-all'>
-                                        {/* <AvatarImage src={} alt=''/> */}
-                                        <AvatarFallback className='bg-blue-100 dark"bg-blue-900 text-blue-600'>K</AvatarFallback>
+                                        <AvatarImage src={user?.profile_pic as string} alt='' />
+                                        <AvatarFallback className='bg-blue-100 dark"bg-blue-900 text-blue-600'>{user ? user?.name?.substring(0, 1) : "K"}</AvatarFallback>
                                     </Avatar>
                                 </button>
                             </PopoverTrigger>
@@ -70,6 +74,8 @@ const Navbar = () => {
                                 <User size={16} />
                                 Sign In                            </Button>
                         </Link>}
+                        </>
+                       }
                     </div>
                     {/* Mobile Menu Button */}
                     <div className="md:hidden flex items-center gap-3">
