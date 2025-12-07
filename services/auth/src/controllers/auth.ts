@@ -12,7 +12,7 @@ import { redisClient } from "../index.js";
 
 export const registerUser = TryCatch(async (req, res, next) => {
     const { name, email, password, phoneNumber, role, bio } = req.body;
-    if (!name || !email || !password || !phoneNumber || !role || !bio) {
+    if (!name || !email || !password || !phoneNumber || !role) {
         throw new Errorhandler(400, 'Please fill all details');
     }
     const existingUsers = await sql`SELECT user_id FROM users WHERE email  = ${email}`;
@@ -30,6 +30,15 @@ export const registerUser = TryCatch(async (req, res, next) => {
         (${name},${email},${hashPassword},${phoneNumber},${role}) RETURNING user_id , name , email , phone_number,role,created_at`;
 
         registeredUser = user;
+        const token = jwt.sign({ id: user?.user_id }, process.env.JWT_SECRET as string, {
+            expiresIn: "15d"
+        });
+
+        res.json({
+            message: "Recruiter created successfully!",
+            user,
+            token
+        })
     } else if (role === 'jobseeker') {
         const file = req.file
         if (!file) {
