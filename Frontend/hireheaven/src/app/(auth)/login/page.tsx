@@ -36,8 +36,8 @@ const LoginPage = () => {
             setBtnLoading(false)
         }
     }
-    if(loading){
-        return <Loading/>
+    if (loading) {
+        return <Loading />
     }
     return (
         <>
