@@ -8,8 +8,10 @@ const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY })
 
 router.post('/upload', async (req, res) => {
 
+
     try {
         const { buffer, public_id } = req.body
+        console.log(buffer, public_id)
         if (public_id) {
             await cloudinary.v2.uploader.destroy(public_id)
         }
