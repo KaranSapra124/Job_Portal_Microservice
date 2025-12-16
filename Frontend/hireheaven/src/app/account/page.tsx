@@ -2,6 +2,7 @@
 import Loading from '@/components/ui/loading'
 import { useAppData } from '@/context/appContext'
 import React from 'react'
+import Info from './(components)/info'
 
 const Account = () => {
     const { isAuth, user, loading } = useAppData()
@@ -9,7 +10,13 @@ const Account = () => {
         return <Loading />
     }
     return (
-        <div>Account</div>
+        <>
+            {
+                user && <div className='w-[90%] md:w-[60%] m-auto'>
+                    <Info user={user} isYourAccount={true} />
+                </div>
+            }
+        </>
     )
 }
 

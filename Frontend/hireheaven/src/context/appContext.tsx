@@ -46,16 +46,51 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
         setUser(null)
         toast.error("Logged Out Successfully!")
     }
-
+    async function updateProfilePic(formData: any) {
+        setLoading(true)
+        try {
+            const { data } = await axios.put(`${user_service}/api/user/update-profile-pic`, formData, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            toast.success(data?.message);
+            fetchUser()
+        } catch (error: any) {
+            toast.error(error?.response?.data?.message)
+        }
+        finally {
+            setLoading(false)
+        }
+    }
+    async function updateResume(formData: any) {
+        setLoading(true)
+        try {
+            const { data } = await axios.put(`${user_service}/api/user/update-user-resume`, formData, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            toast.success(data?.message);
+            fetchUser()
+        } catch (error: any) {
+            toast.error(error?.response?.data?.message)
+        }
+        finally {
+            setLoading(false)
+        }
+    }
 
     useEffect(() => {
         fetchUser()
     }, [])
 
-    return <AppContext.Provider value={{ user, logoutUser, loading, isAuth, btnLoading, setUser, setIsAuth, setLoading }}>
+    return <AppContext.Provider value={{
+        user, logoutUser, loading, isAuth, btnLoading, setUser, setIsAuth, setLoading, updateProfilePic,updateResume
+    }}>
         {children}
-        <Toaster />
-    </AppContext.Provider>
+        < Toaster />
+    </AppContext.Provider >
 }
 
 export const useAppData = (): AppContextType => {
