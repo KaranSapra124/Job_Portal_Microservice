@@ -80,13 +80,47 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
             setLoading(false)
         }
     }
+    async function updateUser(name: string, phoneNumber: string, bio: string) {
+        setBtnLoading(true)
+        try {
+            const { data } = await axios.put(`${user_service}/api/user/update-user`, { name, phoneNumber, bio }, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            toast.success(data?.message);
+            fetchUser()
+        } catch (error: any) {
+            toast.error(error?.response?.data?.message)
+        }
+        finally {
+            setBtnLoading(false)
+        }
+    }
+    async function addSkill(skill: string) {
+        setBtnLoading(true)
+        try {
+            const { data } = await axios.post(`${user_service}/api/user/skill/add`, { skillName:skill }, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            toast.success(data?.message);
+            fetchUser()
+        } catch (error: any) {
+            toast.error(error?.response?.data?.message)
+        }
+        finally {
+            setBtnLoading(false)
+        }
+    }
 
     useEffect(() => {
         fetchUser()
     }, [])
 
     return <AppContext.Provider value={{
-        user, logoutUser, loading, isAuth, btnLoading, setUser, setIsAuth, setLoading, updateProfilePic,updateResume
+        user, logoutUser, loading, isAuth, btnLoading, setUser, setIsAuth, setLoading, updateProfilePic, updateResume, updateUser,addSkill
     }}>
         {children}
         < Toaster />
