@@ -6,6 +6,7 @@ import { useParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
 import Cookies from "js-cookie"
 import Loading from '@/components/ui/loading';
+import Info from '../(components)/info';
 
 const UserAccount = () => {
     const [user, setUser] = useState<User | null>(null);
@@ -33,7 +34,11 @@ const UserAccount = () => {
     if (loading) return <Loading />
     return (
         <>
-
+            {
+                user && <div className='w-[90%] md:w-[60%] m-auto'>
+                    <Info user={user} isYourAccount={false} />
+                </div>
+            }
         </>
     )
 }
