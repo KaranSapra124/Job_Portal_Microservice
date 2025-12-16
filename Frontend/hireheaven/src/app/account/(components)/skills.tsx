@@ -9,7 +9,7 @@ import React, { useState } from 'react'
 import toast from 'react-hot-toast';
 
 const Skills: React.FC<AccountProps> = ({ user, isYourAccount }) => {
-    const { addSkill, btnLoading , removeSkill} = useAppData()
+    const { addSkill, btnLoading, removeSkill } = useAppData()
     const [skill, setSkill] = useState("");
     const addSkillHandler = () => {
         if (!skill.trim()) {
@@ -17,9 +17,9 @@ const Skills: React.FC<AccountProps> = ({ user, isYourAccount }) => {
             return;
         }
         addSkill(skill)
-      if(!btnLoading){
-        setSkill("")
-      }
+        if (!btnLoading) {
+            setSkill("")
+        }
     }
     const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === "Enter") {
@@ -57,6 +57,7 @@ const Skills: React.FC<AccountProps> = ({ user, isYourAccount }) => {
                                 <div>
                                     <div className='flex gap-3 flex-col sm:flex-row'>
                                         <Sparkles size={18} className='absolute left-3 top-1/2 -translate-y-1/2 opacity-50' />
+                                        
                                         <Input type='text' placeholder='eg. React,Node.js...' className='h-11 pl-10 bg-background' value={skill} onChange={(e) => setSkill(e.target.value)} onkeypress={handleKeyPress} />
                                     </div>
                                     <Button onClick={addSkillHandler} className='h-11 gap-2 px-6' disabled={!skill.trim() || btnLoading}><Plus size={18} /> {btnLoading ? "Adding Skill..." : "Add Skill"}</Button>
@@ -70,7 +71,7 @@ const Skills: React.FC<AccountProps> = ({ user, isYourAccount }) => {
                                     {user?.skills?.map((elem, index) => (
                                         <>
                                             <div className="bg-white p-1 flex items-center gap-2 rounded-l-full rounded-r-full px-2  text-blue-600 font-semibold shadow shadow-white" key={index}>{elem}{
-                                                isYourAccount && <button onClick={()=>removeSkillHandler(elem)}><X className='font-extrabold text-white bg-red-500 rounded-full p-0.5  ' size={14} /></button>
+                                                isYourAccount && <button onClick={() => removeSkillHandler(elem)}><X className='font-extrabold text-white bg-red-500 rounded-full p-0.5  ' size={14} /></button>
                                             }</div>
 
                                         </>
