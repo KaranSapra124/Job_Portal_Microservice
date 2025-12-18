@@ -99,7 +99,8 @@ export const getAllCompanies = TryCatch(async (req, res, next) => {
         throw new Errorhandler(403, "Forbidden: Only recruiter can add the company");
     }
     const [companies] = await sql `SELECT * FROM companies WHERE recruiter_id = ${user?.user_id}`;
-    res.json({ message: "Companies fetched successfully!", companies });
+    console.log(companies, user);
+    res.json({ message: "Companies fetched successfully!", companies: companies || [] });
 });
 export const getCompanyDetails = TryCatch(async (req, res, next) => {
     const { companyId } = req?.params;
