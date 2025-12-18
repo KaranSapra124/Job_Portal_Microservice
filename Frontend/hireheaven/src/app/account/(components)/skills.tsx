@@ -78,7 +78,11 @@ const Skills: React.FC<AccountProps> = ({ user, isYourAccount }) => {
 
                                     ))}
                                 </div>
-                            </> : <></>}
+                            </> : <>
+                            <div className='text-center text-white font-bold text-md'>
+                                <h1>{isYourAccount ? "Add some skills to get noticed...":"No skills added by user yet!"}</h1>
+                            </div>
+                            </>}
                         </CardContent>
                     </div>
                 </Card>
