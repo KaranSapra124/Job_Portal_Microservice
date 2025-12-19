@@ -118,8 +118,8 @@ export const getAllCompanies = TryCatch(async (req: AuthenticatedRequest, res, n
     if (user?.role !== 'recruiter') {
         throw new Errorhandler(403, "Forbidden: Only recruiter can add the company")
     }
-    const [companies] = await sql`SELECT * FROM companies WHERE recruiter_id = ${user?.user_id}`;
-    console.log(companies,user)
+    const companies = await sql`SELECT * FROM companies WHERE recruiter_id = ${user?.user_id}`;
+    
     res.json({ message: "Companies fetched successfully!", companies: companies || [] })
 })
 
