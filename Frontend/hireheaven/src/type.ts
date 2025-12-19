@@ -100,7 +100,7 @@ export interface AccountProps {
 }
 
 export interface Job {
-    job_id: number;
+    job_id?: number;
     title: string;
     description: string;
     salary: number | null;
@@ -109,9 +109,9 @@ export interface Job {
     openings: number;
     role: string;
     work_location: 'On-site' | 'Hybrid' | 'Remote';
-    company_id: number;
-    posted_by_recruiter_id: number;
-    created_at: string;
+    company_id: number | null;
+    posted_by_recruiter_id: number | null;
+    created_at?: string;
     is_active: boolean;
 }
 
@@ -123,7 +123,7 @@ export interface Company {
     logo_public_id: string;
     recruiter_id: number;
     created_at: string;
-    job?: Job[];
+    jobs?: Job[];
     website?:string;
 }
 type ApplicationStatus = "Submitted" | "Rejected" | "Hired";
