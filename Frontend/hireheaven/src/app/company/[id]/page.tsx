@@ -39,6 +39,23 @@ const CompanyPage = () => {
 
     })
     const addJobHandler = () => {
+        setJobDetail({
+            description: "",
+            is_active: true,
+            job_type: 'Full-time',
+            location: '',
+            openings: 1,
+            // @ts-expect-error
+            posted_by_recruiter_id: user?.user_id,
+            role: '',
+            salary: 0,
+            title: '',
+            work_location: 'On-site',
+            // @ts-expect-error
+            company_id: company_id
+
+        })
+        setIsUpdate(false)
         setIsModalOpen(true)
     }
     const updateJobHandler = (item: Job) => {
@@ -102,6 +119,25 @@ const CompanyPage = () => {
             toast.error(error?.response?.data?.message)
         }
     }
+    //  const deleteJobFn = async () => {
+
+    //    if(!confirm(`Do You want to delete this job ?`)){
+    //     return;
+    //    }
+    //     try {
+    //         const { data } = await axios.put(`${job_service}/api/job/company/update-job/${jobDetail?.job_id}`, payload, {
+    //             headers: {
+    //                 Authorization: `Bearer ${token}`
+    //             }
+    //         })
+    //         toast.success(data?.message);
+    //         fetchCompany();
+    //         setIsModalOpen(false);
+    //         setIsUpdate(false)
+    //     } catch (error: any) {
+    //         toast.error(error?.response?.data?.message)
+    //     }
+    // }
 
     const isRecruiter = user && comapnyDetail && user?.user_id === comapnyDetail?.recruiter_id;
     useEffect(() => {
@@ -228,7 +264,26 @@ const CompanyPage = () => {
                             <Button
                                 variant="outline"
                                 type="button"
-                                onClick={() => setIsModalOpen(false)}
+                                onClick={() => {
+                                    setIsModalOpen(false);
+                                    setIsUpdate(false);
+                                    setJobDetail({
+                                        description: "",
+                                        is_active: true,
+                                        job_type: 'Full-time',
+                                        location: '',
+                                        openings: 1,
+                                        // @ts-expect-error
+                                        posted_by_recruiter_id: user?.user_id,
+                                        role: '',
+                                        salary: 0,
+                                        title: '',
+                                        work_location: 'On-site',
+                                        // @ts-expect-error
+                                        company_id: company_id
+
+                                    })
+                                }}
                             >
                                 Cancel
                             </Button>
@@ -340,7 +395,7 @@ const CompanyPage = () => {
                                                         </div>
                                                         <div className='flex gap-1'>
                                                             <Button variant={"default"} onClick={() => updateJobHandler(j)}><Pen size={8} /></Button>
-                                                            <Button variant={"destructive"}><Trash2 size={8} /></Button>
+                                                            {/* <Button variant={"destructive"}><Trash2 size={8} /></Button> */}
                                                         </div>
                                                     </div>
                                                 </div>
