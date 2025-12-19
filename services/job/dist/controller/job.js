@@ -77,7 +77,7 @@ export const updateJob = TryCatch(async (req, res, next) => {
         throw new Errorhandler(403, "Forbidden: Only recruiter can add the company");
     }
     const { title, description, salary, location, role, job_type, work_location, company_id, openings, is_active } = req.body;
-    if (!title || !description || !salary || !location || !role || !job_type || !work_location || !company_id || !is_active) {
+    if (!title || !description || !salary || !location || !role || !job_type || !work_location || !company_id) {
         throw new Errorhandler(400, "All fields are required!");
     }
     const [existingJob] = await sql `SELECT posted_by_recruiter_id FROM jobs WHERE job_id = ${jobId}`;
