@@ -152,12 +152,12 @@ const CompanyPage = () => {
         <>
             {/* Add Job Modal */}
             <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
-                <DialogTrigger asChild>
+                {/* <DialogTrigger asChild>
                     <Button className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700">
                         <PlusCircle className="w-4 h-4" />
                         Post a New Job
                     </Button>
-                </DialogTrigger>
+                </DialogTrigger> */}
                 <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
                     <DialogHeader>
                         <DialogTitle className="text-2xl font-bold">Create Job Opening</DialogTitle>
