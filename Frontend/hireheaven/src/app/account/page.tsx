@@ -5,9 +5,11 @@ import React from 'react'
 import Info from './(components)/info'
 import Skills from './(components)/skills'
 import Company from './(components)/company'
+import { redirect } from 'next/navigation'
 
 const Account = () => {
     const { isAuth, user, loading } = useAppData()
+    if (!isAuth) return redirect("/login")
     if (loading) {
         return <Loading />
     }
@@ -17,7 +19,7 @@ const Account = () => {
                 user && <div className='w-[90%] md:w-[60%] m-auto'>
                     <Info user={user} isYourAccount={true} />
                     {user?.role === "jobseeker" && <Skills user={user} isYourAccount={true} />}
-                    {user?.role === "recruiter" && <Company/>}
+                    {user?.role === "recruiter" && <Company />}
 
                 </div>
             }
