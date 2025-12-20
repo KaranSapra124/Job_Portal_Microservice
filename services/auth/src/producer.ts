@@ -45,7 +45,7 @@ export const publishToTopic = async (topic: string, message: any) => {
     }
 
     try {
-        await producer.send({
+        const data = await producer.send({
             topic: topic,
             messages: [
                 {
@@ -53,6 +53,7 @@ export const publishToTopic = async (topic: string, message: any) => {
                 }
             ]
         })
+
     } catch (error) {
         console.log("Failed to publish message to kafka ====>> ", error)
     }

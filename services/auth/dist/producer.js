@@ -39,7 +39,7 @@ export const publishToTopic = async (topic, message) => {
         return;
     }
     try {
-        await producer.send({
+        const data = await producer.send({
             topic: topic,
             messages: [
                 {

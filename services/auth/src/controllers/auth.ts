@@ -119,7 +119,6 @@ export const forgotPassword = TryCatch(async (req, res, next) => {
     await redisClient.set(`forgot:${email}`, resetToken, {
         EX: 900
     })
-
     const message = {
         to: email,
         subject: "Reset Your Password - HireHeaven",
