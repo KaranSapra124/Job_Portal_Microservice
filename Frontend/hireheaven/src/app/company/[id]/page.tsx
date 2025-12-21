@@ -10,8 +10,9 @@ import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Pen, PlusCircle, Trash2 } from 'lucide-react';
+import { CardSim, Pen, PlusCircle, Trash2 } from 'lucide-react';
 import { Switch } from '@/components/ui/switch';
+import Link from 'next/link';
 
 const CompanyPage = () => {
     const token = Cookies.get("token")
@@ -119,6 +120,7 @@ const CompanyPage = () => {
             toast.error(error?.response?.data?.message)
         }
     }
+    
     //  const deleteJobFn = async () => {
 
     //    if(!confirm(`Do You want to delete this job ?`)){
@@ -394,8 +396,8 @@ const CompanyPage = () => {
                                                             </p>
                                                         </div>
                                                         <div className='flex gap-1'>
+                                                            <Link href={`/company/jobs/${j.job_id}`} className='p-2 shadow rounded'><CardSim size={20} /></Link>
                                                             <Button variant={"default"} onClick={() => updateJobHandler(j)}><Pen size={8} /></Button>
-                                                            {/* <Button variant={"destructive"}><Trash2 size={8} /></Button> */}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -430,6 +432,8 @@ const CompanyPage = () => {
                     </div>
                     : <h1>You are forbidden to access this page.</h1>}
             </div>
+
+
         </>
     );
 }
