@@ -1,6 +1,6 @@
 "use client"
 
-import { AppContextType, AppProviderProps, User } from "@/type"
+import { AppContextType, Application, AppProviderProps, User } from "@/type"
 import { createContext, useContext, useEffect, useState } from "react"
 import toast, { Toaster } from "react-hot-toast"
 import Cookies from "js-cookie"
@@ -16,6 +16,7 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
     const [user, setUser] = useState<User | null>(null)
     const [isAuth, setIsAuth] = useState(false)
     const [loading, setLoading] = useState(true)
+    const [applications, setApplications] = useState<Application[] | null>(null)
     const [btnLoading, setBtnLoading] = useState(false)
 
 
@@ -132,12 +133,48 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
         }
     }
 
+    async function applyForJob(jobId?: number) {
+        setBtnLoading(true)
+        try {
+            const { data } = await axios.post(`${user_service}/api/user/apply`, { jobId: jobId }, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            toast.success(data?.message);
+            fetchUser()
+        } catch (error: any) {
+            toast.error(error?.response?.data?.message)
+        }
+        finally {
+            setBtnLoading(false)
+        }
+    }
+    async function getJobApplications() {
+        setBtnLoading(true)
+        try {
+            const { data } = await axios.get(`${user_service}/api/user/get-applications`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            toast.success(data?.message);
+            setApplications(data)
+        } catch (error: any) {
+            toast.error(error?.response?.data?.message)
+        }
+        finally {
+            setBtnLoading(false)
+        }
+    }
+
     useEffect(() => {
         fetchUser()
+        getJobApplications()
     }, [])
 
     return <AppContext.Provider value={{
-        user, logoutUser, loading, isAuth, btnLoading, setUser, setIsAuth, setLoading, updateProfilePic, updateResume, updateUser, addSkill,removeSkill
+        user, logoutUser, loading, isAuth, btnLoading, setUser, setIsAuth, setLoading, updateProfilePic, updateResume, updateUser, addSkill, removeSkill, applyForJob,applications,getJobApplications
     }}>
         {children}
         < Toaster />

@@ -87,7 +87,10 @@ export interface AppContextType {
     updateResume: (formData: any) => Promise<void>;
     updateUser: (name: string, phoneNumber: string, bio: string) => Promise<void>;
     addSkill: (skill: string) => Promise<void>;
-    removeSkill: (skill: string) => Promise<void>
+    removeSkill: (skill: string) => Promise<void>;
+    applyForJob: (jobId: number) => Promise<void>;
+    applications: Application[] | null;
+    getJobApplications: () => Promise<void>
 }
 
 export interface AppProviderProps {
@@ -110,6 +113,7 @@ export interface Job {
     role: string;
     work_location: 'On-site' | 'Hybrid' | 'Remote';
     company_id: number | null;
+    company_logo: string;
     posted_by_recruiter_id: number | null;
     created_at?: string;
     is_active: boolean;
@@ -124,7 +128,7 @@ export interface Company {
     recruiter_id: number;
     created_at: string;
     jobs?: Job[];
-    website?:string;
+    website?: string;
 }
 type ApplicationStatus = "Submitted" | "Rejected" | "Hired";
 
