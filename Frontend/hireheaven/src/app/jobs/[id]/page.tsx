@@ -1,5 +1,5 @@
 "use client"
-import { job_service } from '@/context/appContext'
+import { job_service, useAppData } from '@/context/appContext'
 import { Job } from '@/type'
 import axios from 'axios'
 import { useParams, useRouter } from 'next/navigation'
@@ -24,6 +24,7 @@ import Loading from '@/components/ui/loading'
 
 const JobsPage = () => {
     const token = Cookies.get("token");
+    const { applications, applyForJob } = useAppData()
     const { id } = useParams();
     const router = useRouter();
 
@@ -46,6 +47,11 @@ const JobsPage = () => {
             setLoading(false);
         }
     };
+    const isAlreadyApplied = (jobId: number) => {
+        return applications && applications?.length > 0 && applications?.some((j) => {
+            return j.job_id === jobId
+        })
+    }
 
     useEffect(() => {
         if (id) getJobFn();
@@ -117,8 +123,16 @@ const JobsPage = () => {
                         </div>
 
                         <div className="w-full md:w-auto">
-                            <Button size="lg" className="w-full md:w-auto bg-blue-600 hover:bg-blue-700 text-white px-12 h-14 text-lg font-bold rounded-2xl shadow-xl shadow-blue-100 transition-all active:scale-95">
-                                Apply Now
+                            <Button onClick={async () => {
+
+                                if (job?.job_id && !isAlreadyApplied(job?.job_id)) {
+
+                                    await applyForJob(job.job_id)
+                                } else {
+                                    toast.error("You have already applied to it!")
+                                }
+                            }} disabled={isAlreadyApplied(job.job_id as number) as boolean} size="lg" className={`${isAlreadyApplied(job?.job_id as number) ? "w-full md:w-auto bg-gray-200 hover:bg-gray-500 text-black cursor-not-allowed px-12 h-14 text-lg font-bold rounded-2xl shadow-xl shadow-blue-100 transition-all active:scale-95" : "w-full md:w-auto bg-blue-600 hover:bg-blue-700 text-white px-12 h-14 text-lg font-bold rounded-2xl shadow-xl shadow-blue-100 transition-all active:scale-95"}`}>
+                                {isAlreadyApplied(job?.job_id as number) ? "Already Applied" : "Apply Now"}
                             </Button>
                         </div>
                     </div>
