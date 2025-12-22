@@ -160,7 +160,7 @@ const Info: React.FC<AccountProps> = ({ user, isYourAccount }) => {
                             {
 
                                 isYourAccount && <>
-                                    <Button variant={"secondary"} size={"icon"} onClick={handleClick} className='absolute bottom-96 right-[65rem]  rounded-full h-10 w-10 shadow-lg'>
+                                    <Button variant={"secondary"} size={"icon"} onClick={handleClick} className='absolute bottom-96 right-260  rounded-full h-10 w-10 shadow-lg'>
                                         <Camera size={18} />
 
                                     </Button>

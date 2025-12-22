@@ -41,7 +41,7 @@ const AppliedJobs = () => {
                 </div>
 
                 {!applications || applications.length === 0 ? (
-                    <div className="bg-white rounded-[32px] border-2 border-dashed border-gray-200 p-20 text-center">
+                    <div className="bg-white rounded-4xl border-2 border-dashed border-gray-200 p-20 text-center">
                         <div className="bg-gray-50 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
                             <Briefcase className="text-gray-300" size={32} />
                         </div>

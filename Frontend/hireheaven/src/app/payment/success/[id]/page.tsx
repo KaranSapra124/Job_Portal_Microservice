@@ -12,7 +12,7 @@ const PaymentSuccess = () => {
         <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
             <div className="max-w-md w-full bg-white rounded-[40px] shadow-2xl border border-gray-100 p-8 text-center relative overflow-hidden">
                 {/* Decorative background element */}
-                <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-green-400 to-emerald-500" />
+                <div className="absolute top-0 left-0 w-full h-2 bg-linear-to-r from-green-400 to-emerald-500" />
                 
                 <div className="mb-8 flex justify-center">
                     <div className="relative">

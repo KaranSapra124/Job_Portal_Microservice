@@ -90,7 +90,7 @@ const SubscriptionPage = () => {
             {/* Pricing Card Container */}
             <div className="max-w-md mx-auto relative">
                 {/* Decorative background glow */}
-                <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-3xl blur opacity-25"></div>
+                <div className="absolute -inset-1 bg-linear-to-r from-blue-600 to-indigo-600 rounded-3xl blur opacity-25"></div>
 
                 <div className="relative bg-white border border-gray-100 rounded-3xl shadow-2xl overflow-hidden">
                     {/* Card Header */}
