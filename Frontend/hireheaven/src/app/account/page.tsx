@@ -6,6 +6,7 @@ import Info from './(components)/info'
 import Skills from './(components)/skills'
 import Company from './(components)/company'
 import { redirect } from 'next/navigation'
+import AppliedJobs from './(components)/appliedJobs'
 
 const Account = () => {
     const { isAuth, user, loading } = useAppData()
@@ -20,6 +21,9 @@ const Account = () => {
                     <Info user={user} isYourAccount={true} />
                     {user?.role === "jobseeker" && <Skills user={user} isYourAccount={true} />}
                     {user?.role === "recruiter" && <Company />}
+                    {
+                        user?.role === "jobseeker" && <AppliedJobs />
+                    }
 
                 </div>
             }

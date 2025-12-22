@@ -17,7 +17,7 @@ const Info: React.FC<AccountProps> = ({ user, isYourAccount }) => {
     const [name, setName] = useState("");
     const [phoneNumber, setPhoneNumber] = useState("")
     const [bio, setBio] = useState("");
-    const { updateProfilePic, updateResume , btnLoading ,updateUser} = useAppData()
+    const { updateProfilePic, updateResume, btnLoading, updateUser } = useAppData()
 
     const handleClick = () => {
         inputRef.current?.click()
@@ -38,8 +38,8 @@ const Info: React.FC<AccountProps> = ({ user, isYourAccount }) => {
         setBio(user?.bio || "")
     }
 
-    const updateProfileHandler = () => { 
-        updateUser(name,phoneNumber,bio)
+    const updateProfileHandler = () => {
+        updateUser(name, phoneNumber, bio)
     };
     const changeResume = (e: ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
@@ -171,10 +171,32 @@ const Info: React.FC<AccountProps> = ({ user, isYourAccount }) => {
                     </div>
                 )}
 
+                {/* Subscription */}
+                {user?.role === "jobseeker" && (
+                    <div>
+                        <h2 className="text-lg font-semibold mt-8 mx-2 flex items-center gap-2">
+                            <Briefcase size={20} className="text-blue-600" />
+                            Subscription
+                        </h2>
+                        <div className="flex items-center gap-3 p-4 rounded-lg border hover:border-blue-500 transition-colors mx-2">
+                            <div className="flex-1">
+                                <p className="text-sm font-medium">
+                                    {user?.subscription ? "You are subscribed to Premium Plan" : "You are on Free Plan"}
+                                </p>
+                                <p className="text-xs opacity-70">
+                                    {user?.subscription ? "Enjoy unlimited job applications and exclusive features with Premium." : "Upgrade to Premium for unlimited applications and exclusive features."}
+                                </p>
+                            </div>
+                            <Link href={"/subscribe"}>Subscribe</Link>
+                    </div>
+                    </div>
+    )
+}
 
-            </Card>
-            {/* Dialog box for edit */}
-            <Dialog>
+
+            </Card >
+    {/* Dialog box for edit */ }
+    < Dialog >
                 <DialogTrigger asChild>
                     <Button ref={editRef} variant={"outline"} className='hidden'>Edit Profile</Button>
                 </DialogTrigger>
@@ -221,8 +243,8 @@ const Info: React.FC<AccountProps> = ({ user, isYourAccount }) => {
                     </DialogFooter>
                 </DialogContent>
 
-            </Dialog>
-        </div>
+            </Dialog >
+        </div >
     )
 }
 
