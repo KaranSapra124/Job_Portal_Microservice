@@ -147,6 +147,7 @@ export const getSingleJob = TryCatch(async (req, res, next) => {
 export const getAllApplicationForJob = TryCatch(async (req, res, next) => {
     const user = req?.user;
     const { jobId } = req?.params;
+    console.log(user?.role);
     if (!user) {
         throw new Errorhandler(401, "Authentication is required");
     }
@@ -154,6 +155,7 @@ export const getAllApplicationForJob = TryCatch(async (req, res, next) => {
         throw new Errorhandler(403, "Forbidden: Only recruiter can access this route");
     }
     const [job] = await sql `SELECT posted_by_recruiter_id FROM jobs WHERE job_id=${jobId} `;
+    console.log(job);
     if (!job) {
         throw new Errorhandler(404, "Job Not Found!");
     }
