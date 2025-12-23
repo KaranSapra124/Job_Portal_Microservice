@@ -24,7 +24,7 @@ const LoginPage = () => {
             toast.success(data?.message);
             Cookies.set("token", data?.token, {
                 expires: 1,
-                secure: true,
+                secure: false,
                 path: '/',
             })
             setUser(data?.userObject)

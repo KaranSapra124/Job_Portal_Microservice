@@ -58,7 +58,7 @@ const Skills: React.FC<AccountProps> = ({ user, isYourAccount }) => {
                                     <div className='flex gap-3 flex-col sm:flex-row'>
                                         <Sparkles size={18} className='absolute left-3 top-1/2 -translate-y-1/2 opacity-50' />
                                         
-                                        <Input type='text' placeholder='eg. React,Node.js...' className='h-11 pl-10 bg-background' value={skill} onChange={(e) => setSkill(e.target.value)} onkeypress={handleKeyPress} />
+                                        <Input type='text' placeholder='eg. React,Node.js...' className='h-11 pl-10 bg-background' value={skill} onChange={(e) => setSkill(e.target.value)} onKeyPress={handleKeyPress} />
                                     </div>
                                     <Button onClick={addSkillHandler} className='h-11 gap-2 px-6' disabled={!skill.trim() || btnLoading}><Plus size={18} /> {btnLoading ? "Adding Skill..." : "Add Skill"}</Button>
                                 </div>
