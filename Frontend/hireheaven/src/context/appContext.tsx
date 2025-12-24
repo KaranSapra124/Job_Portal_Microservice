@@ -30,7 +30,6 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
                     Authorization: `Bearer ${token}`
                 }
             })
-
             setUser(data)
             setIsAuth(true)
         } catch (error: any) {
@@ -159,7 +158,6 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
                     Authorization: `Bearer ${token}`
                 }
             })
-            toast.success(data?.message);
             setApplications(data)
         } catch (error: any) {
             toast.error(error?.response?.data?.message)

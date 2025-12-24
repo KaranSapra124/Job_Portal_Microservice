@@ -112,12 +112,12 @@ const Navbar = () => {
                     {
                         isAuth ?
                             <>
-                                <Button onClick={() => {
-                                    logoutHandler();
-                                    toggleMenu()
-                                }} variant={'destructive'} className='w-full justify-start gap-3 h-11'>
-                                    <User size={18} /> My Profile
-                                </Button>
+                                <Link href={`/account/${user?.user_id}`} onClick={toggleMenu}>
+
+                                    <Button variant={'ghost'} className='w-full justify-start gap-3 h-11'>
+                                        <User size={18} /> My Profile
+                                    </Button>
+                                </Link>
                                 <Button onClick={() => {
                                     logoutHandler();
                                     toggleMenu()
