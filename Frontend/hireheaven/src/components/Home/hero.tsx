@@ -13,58 +13,58 @@ const Hero = () => {
                     <div className='absolute bottom-20 right-10 w-96 h-96 rounded-full  blur-3xl'>
                     </div>
                 </div>
-                <div className='container mx-auto px-5 py-16 md:py-24 relative'>
-                    <div className="flex flex-col-reverse md:flex-row items-center gap-12 md:gap-16">
+                <div className='container mx-auto px-5 py-2 md:py-24 relative'>
+                    <div className="flex flex-col-reverse md:flex-row items-center gap-5 md:gap-16">
                         <div className="flex-1 flex flex-col items-center md:items-start text-center md:text-left space-y-6">
                             {/* Badge */}
                             <div className='inline-flex items-center gap-2 px-4 py-2 rounded-full border bg-background/50 backdrop-blur-sm'>
                                 <TrendingUp size={16} className='text-blue-600' />
-                                <span className='text-sm font-medium'>#1 Job Platform In India</span>
+                                <span className='md:text-sm text-xs font-medium'>#1 Job Platform In India</span>
                             </div>
                             {/* Main Heading */}
-                            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
+                            <h1 className="text-2xl md:text-5xl lg:text-6xl font-bold leading-tight">
                                 Find Your Dream Job At <span className='inline-block '>Hire <span className='text-red-600'>Heaven</span></span>
                             </h1>
                             {/* description */}
-                            <p className="text-lg md:text-xl leading-relaxed opacity-80 max-w-2xl">
+                            <p className="text-sm font-semibold md:text-xl leading-relaxed opacity-80 max-w-2xl">
                                 Connect With Top Employers & Discover opportunities that match your skills. Whether you're a job seeker or recruiter , we've got you convered with powerful tools & seamless experience.
                             </p>
                             {/* stats */}
-                            <div className="flex flex-wrap justify-center md:justify-start gap-8 py-4">
+                            <div className="flex flex-wrap justify-center md:justify-start gap-4 py-2">
                                 <div className="text-center md:text-left">
-                                    <p className='text-3xl font-bold text-blue-600'>10k+</p>
-                                    <p className='text-sm opacity-70'>Active Jobs</p>
+                                    <p className='text-xl md:text-4xl font-bold text-blue-800'>10k+</p>
+                                    <p className='text-sm opacity-70 font-semibold'>Active Jobs</p>
 
                                 </div>
                                 <div className="text-center md:text-left">
-                                    <p className='text-3xl font-bold text-blue-600'>5k+</p>
-                                    <p className='text-sm opacity-70'>Companies</p>
+                                    <p className='text-xl md:text-4xl font-bold text-blue-800'>5k+</p>
+                                    <p className='text-sm opacity-70 font-semibold'>Companies</p>
                                 </div>
                                 <div className="text-center md:text-left">
-                                    <p className='text-3xl font-bold text-blue-600'>50k+</p>
-                                    <p className='text-sm opacity-70'>Job Seekers</p>
+                                    <p className='text-xl md:text-4xl font-bold text-blue-800'>50k+</p>
+                                    <p className='text-sm opacity-70 font-semibold'>Job Seekers</p>
                                 </div>
                             </div>
-                            <div className="flex flex-col sm:flex-row gap-4 pt-2">
+                            <div className="flex  gap-2 pt-2">
                                 <Link href={"/jobs"}>
-                                    <Button size={"lg"} className='text-base px-8 h-12 gap-2 group transition-all'>
+                                    <Button size={"lg"} className='text-base px-2 h-9 gap-2 group transition-all'>
                                         <Search size={18} />
                                         Browse Jobs <ArrowRight size={18} className='group-hover:translate-x-1 transition-transform' />
                                     </Button></Link>
                                 <Link href={"/about"}>
-                                    <Button size={"lg"} variant={"outline"} className='text-base px-8 h-12 gap-2 group transition-all'>
+                                    <Button size={"lg"} variant={"outline"} className='text-base px-2 h-9 gap-2 group transition-all'>
                                         <Briefcase size={18} />
                                         Learn More
                                     </Button></Link>
                             </div>
                             {/* Trust Indicator Section */}
-                            <div className="flex items-center gap-2 text-sm opacity-60 pt-4">
-                                <span>✔️ Free To Use</span>
-                                <span>• </span>
-                                <span>✔️ Verified employers</span>
-                                <span>• </span>
-                                <span>✔️ Secure platform</span>
-                                <span>• </span>
+                            <div className="flex  items-center gap-1 text-sm opacity-50 pt-2">
+                                <span className='text-xs md:text-sm font-semibold'>✔️ Free To Use</span>
+                                <span>|</span>
+                                <span className='text-xs md:text-sm font-semibold'>✔️ Verified employers</span>
+                                <span>|</span>
+                                <span className='text-xs md:text-sm font-semibold'>✔️ Secure platform</span>
+                                
                             </div>
                         </div>
                         {/* Image section */}
