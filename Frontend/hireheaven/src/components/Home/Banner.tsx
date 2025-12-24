@@ -1,5 +1,6 @@
 import React from 'react'
 import { ArrowRight, Zap, Users, Sparkles } from 'lucide-react'
+import Link from 'next/link'
 
 const Banner = () => {
   return (
@@ -28,10 +29,12 @@ const Banner = () => {
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <button className="w-full sm:w-auto px-4 py-2 bg-white text-blue-700 font-black rounded-sm hover:bg-blue-50 transition-all shadow-xl hover:shadow-blue-900/20 active:scale-95 flex items-center justify-center gap-2 group">
+          <Link href={"/login"} className='cursor-pointer'>
+            <button className="w-full sm:w-auto cursor-pointer px-4 py-2 bg-white text-blue-700 font-black rounded-sm hover:bg-blue-50 transition-all shadow-xl hover:shadow-blue-900/20 active:scale-95 flex items-center justify-center gap-2 group">
               Get Started Now
               <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
             </button>
+          </Link>
             
            
           </div>

@@ -6,7 +6,7 @@ import { Button } from '../ui/button'
 const Hero = () => {
     return (
         <>
-            <section className='relative overflow-hidden bg-secondary'>
+            <section className='relative overflow-hidden bg-gray-400/10'>
                 <div className='absolute inset-0 opacity-5'>
                     <div className='absolute top-20 left-10 w-72 h-72 bg-blue-500 rounded-full  blur-3xl'>
                     </div>
@@ -23,7 +23,7 @@ const Hero = () => {
                             </div>
                             {/* Main Heading */}
                             <h1 className="text-2xl md:text-5xl lg:text-6xl font-bold leading-tight">
-                                Find Your Dream Job At <span className='inline-block '>Talent <span className='text-red-600'>Loop</span></span>
+                                Find Your Dream Job At <span className='inline-block '>Talent <span className='text-red-600'></span></span>
                             </h1>
                             {/* description */}
                             <p className="text-sm font-semibold md:text-xl leading-relaxed opacity-80 max-w-2xl">

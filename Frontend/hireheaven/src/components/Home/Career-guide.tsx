@@ -60,24 +60,24 @@ const CareerGuide = () => {
 
     return (
         <>
-            <div className="max-w-7xl mx-auto px-4 py-10 md:py-16">
+            <div className="bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 mx-auto px-4 py-10 md:py-16">
                 <div className="text-center ">
-                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border bg-blue-50 dark:bg-blue-950 mb-4">
+                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border bg-gray-300 dark:bg-blue-950 mb-4">
                         <Sparkles size={16} className="text-blue-600" />
                         <span className="md:text-sm text-xs font-medium">
                             AI-Powered Career Guidence
                         </span>
                     </div>
 
-                    <h2 className="text-xl md:text-4xl font-bold mb-4">Discover Your Carrer Path</h2>
-                    <p className="md:text-lg text-xs opacity-70 font-semibold max-w-2xl mx-auto mb-5">
+                    <h2 className="text-xl md:text-4xl text-white font-bold mb-4">Discover Your Carrer Path</h2>
+                    <p className="md:text-lg text-xs opacity-70 font-semibold max-w-2xl mx-auto mb-5 text-white">
                         Get personalized job recommendations and learnings roadmaps based on your skills.
                     </p>
                     <Dialog open={open} onOpenChange={setOpen}>
                         <DialogTrigger asChild>
-                            <Button size={"sm"} className="gap-2 h-10 px-2">
+                            <Button size={"sm"} variant={'outline'} className="cursor-pointer font-semibold gap-2 h-10 px-2">
                                 <Sparkles size={18} />
-                                Get Carrer Guidence
+                                Get Career Guidence
                                 <ArrowRight size={18} />
                             </Button>
                         </DialogTrigger>
