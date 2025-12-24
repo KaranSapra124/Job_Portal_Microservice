@@ -109,27 +109,27 @@ const ResumeAnalyzer = () => {
 
     };
     return (
-        <div className="max-w-7xl mx-auto px-4 py-16 bg-secondary/30">
-            <div className="text-center mb-12">
+        <div className="mx-auto px-4 py-10  md:py-16 bg-gray-400/10">
+            <div className="text-center mb-4">
                 <div
 
                     className="inline-flex items-center gap-2 px-4 py-2 rounded-full border bg-red-
-50 dark:bg-red-950/30 mb-4"
+50 dark:bg-red-950/30 mb-2"
 
                 >
                     <FileCheck size={16} className="text-red-500" />
-                    <span className="text-sm font-medium">AI-Powered ATS Analysis</span>
+                    <span className="md:text-sm text-xs font-medium">AI-Powered ATS Analysis</span>
                 </div>
-                <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                <h2 className="text-xl md:text-4xl font-bold mb-2">
                     Optimize Your Resume for ATS
                 </h2>
-                <p className="text-lg opacity-70 max-w-2xl mx-auto mb-8">
+                <p className="text-xs font-semibold md:text-lg opacity-70 max-w-2xl mx-auto mb-2">
                     Get instant feedback on your resume's compatibility with Applicant
                     Tracking Systems
                 </p>
                 <Dialog open={open} onOpenChange={setOpen}>
                     <DialogTrigger asChild>
-                        <Button size="lg" className="gap-2 h-12 px-8">
+                        <Button size="sm" className="gap-2 h-10 px-8">
                             <FileText size={18} />
                             Analyze My Resume
                             <ArrowRight size={18} />
