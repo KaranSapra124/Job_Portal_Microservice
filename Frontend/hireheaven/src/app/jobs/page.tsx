@@ -164,10 +164,10 @@ const JobPage = () => {
                         {/* Header Area */}
                         <div className="mb-8">
                             <div className='flex justify-between items-center'>
-                                <h1 className="text-3xl font-extrabold text-gray-900 tracking-tight">Explore Opportunities</h1>
+                                <h1 className="text-3xl font-extrabold text-blue-700 tracking-tight">Explore Opportunities</h1>
                                 <Button onClick={() => setFilterModal(true)}>Filters <Filter /></Button>
                             </div>
-                            <p className="text-gray-500 mt-1">Find your next career move from top companies.</p>
+                            <p className="text-gray-700 text-xs font-semibold mt-1">Find your next career move from top companies.</p>
                             {(filters?.title || filters?.location) && (
                                 <div className="flex flex-wrap items-center gap-3 mb-6 animate-in fade-in slide-in-from-top-1">
                                     <h2 className="text-sm font-bold text-gray-700 uppercase tracking-wider">
@@ -226,8 +226,8 @@ const JobPage = () => {
                         <div className="flex flex-col lg:flex-row gap-8">
 
                             {/* Left Sidebar: Filters */}
-                            <aside className="w-full lg:w-64 space-y-6">
-                                <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
+                            {/* <aside className="w-full lg:w-64 space-y-6"> */}
+                                {/* <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
                                     <h3 className="font-bold text-gray-900 mb-4">Location</h3>
                                     <div className="space-y-3">
                                         {location.map((loc) => (
@@ -255,8 +255,8 @@ const JobPage = () => {
                                             </label>
                                         ))}
                                     </div>
-                                </div>
-
+                                </div> */}
+{/* 
                                 <div className="bg-blue-600 p-6 rounded-2xl text-white shadow-lg shadow-blue-100">
                                     <h4 className="font-bold text-lg mb-2">Job Alerts</h4>
                                     <p className="text-blue-100 text-xs leading-relaxed mb-4">
@@ -265,8 +265,8 @@ const JobPage = () => {
                                     <button className="w-full py-2 bg-white text-blue-600 rounded-lg text-sm font-bold hover:bg-blue-50 transition-colors">
                                         Enable Alerts
                                     </button>
-                                </div>
-                            </aside>
+                                </div> */}
+                            {/* </aside> */}
 
                             {/* Right Content: Job Feed */}
                             <main className="flex-1">

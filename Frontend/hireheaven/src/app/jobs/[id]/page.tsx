@@ -34,11 +34,7 @@ const JobsPage = () => {
     const getJobFn = async () => {
         setLoading(true);
         try {
-            const { data } = await axios.get(`${job_service}/api/job/company/get-job/${id}`, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            });
+            const { data } = await axios.get(`${job_service}/api/job/company/get-job/${id}`);
             // Based on your previous snippet, data might be the job object directly
             setJob(data);
         } catch (error: any) {
@@ -101,21 +97,21 @@ const JobsPage = () => {
                                 <CheckCircle size={14} />
                                 {job.is_active ? "Actively Hiring" : "Closed"}
                             </div>
-                            <h1 className="text-3xl md:text-5xl font-extrabold text-gray-900 tracking-tight">
+                            <h1 className="text-xl md:text-4xl font-extrabold text-blue-800 tracking-tight">
                                 {job.title}
                             </h1>
-                            <div className="flex flex-wrap items-center gap-y-2 gap-x-6 text-gray-600">
-                                <div className="flex items-center gap-2">
-                                    <Building2 size={20} className="text-blue-500" />
-                                    <span className="font-semibold text-gray-800">Company ID: {job.company_id}</span>
+                            <div className="flex  items-center gap-y-2 gap-1 text-gray-600">
+                                <div className="flex items-center gap-1">
+                                    <Building2 size={15} className="text-blue-500" />
+                                    <span className="font-semibold md:text-lg text-sm text-gray-800">Company ID: {job.company_id}</span>
                                 </div>
-                                <div className="flex items-center gap-2">
-                                    <MapPin size={20} className="text-red-500" />
-                                    <span className="font-medium">{job.location}</span>
+                                <div className="flex items-center gap-1">
+                                    <MapPin size={15} className="text-red-500" />
+                                    <span className="font-medium md:text-lg text-sm">{job.location}</span>
                                 </div>
-                                <div className="flex items-center gap-2">
-                                    <Clock size={20} className="text-orange-500" />
-                                    <span className="font-medium">
+                                <div className="flex items-center gap-1">
+                                    <Clock size={15} className="text-orange-500" />
+                                    <span className="font-medium md:text-lg text-sm">
                                         Posted {new Date(job.created_at || '').toLocaleDateString()}
                                     </span>
                                 </div>
@@ -131,7 +127,7 @@ const JobsPage = () => {
                                 } else {
                                     toast.error("You have already applied to it!")
                                 }
-                            }} disabled={isAlreadyApplied(job.job_id as number) as boolean} size="lg" className={`${isAlreadyApplied(job?.job_id as number) ? "w-full md:w-auto bg-gray-200 hover:bg-gray-500 text-black cursor-not-allowed px-12 h-14 text-lg font-bold rounded-2xl shadow-xl shadow-blue-100 transition-all active:scale-95" : "w-full md:w-auto bg-blue-600 hover:bg-blue-700 text-white px-12 h-14 text-lg font-bold rounded-2xl shadow-xl shadow-blue-100 transition-all active:scale-95"}`}>
+                            }} disabled={isAlreadyApplied(job.job_id as number) as boolean} size="lg" className={`${isAlreadyApplied(job?.job_id as number) ? "w-full md:w-auto bg-gray-200 hover:bg-gray-500 text-black cursor-not-allowed px-4 h-10 text-lg font-bold rounded-2xl shadow-xl shadow-blue-100 transition-all active:scale-95" : "w-full md:w-auto bg-blue-600 hover:bg-blue-700 text-white px-4 h-10 text-lg font-bold rounded-2xl shadow-xl shadow-blue-100 transition-all active:scale-95"}`}>
                                 {isAlreadyApplied(job?.job_id as number) ? "Already Applied" : "Apply Now"}
                             </Button>
                         </div>
@@ -145,15 +141,15 @@ const JobsPage = () => {
 
                     {/* Left Side: Job Details */}
                     <div className="lg:col-span-2 space-y-8">
-                        <div className="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm">
-                            <h2 className="text-2xl font-bold text-gray-900 mb-6">About the Role</h2>
-                            <div className="text-gray-600 leading-relaxed whitespace-pre-line text-lg">
+                        <div className="bg-white p-4 md:p-8 rounded border border-gray-100 shadow-sm">
+                            <h2 className="md:text-2xl text-xl font-bold text-gray-900 mb-2">About the Role</h2>
+                            <div className="text-gray-600 leading-relaxed whitespace-pre-line md:text-lg text-xs">
                                 {job.description}
                             </div>
                         </div>
 
-                        <div className="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm">
-                            <h2 className="text-2xl font-bold text-gray-900 mb-6">Key Responsibility</h2>
+                        <div className="bg-white p-4 md:p-8 rounded border border-gray-100 shadow-sm">
+                            <h2 className="md:text-2xl text-xl font-bold text-gray-900 mb-2">Key Responsibility</h2>
                             <ul className="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-600">
                                 {[
                                     "Work with multidisciplinary teams",
@@ -161,7 +157,7 @@ const JobsPage = () => {
                                     "Commit to hybrid work culture",
                                     "Collaborate on development"
                                 ].map((item, idx) => (
-                                    <li key={idx} className="flex items-center gap-3">
+                                    <li key={idx} className="flex items-center gap-3 md:text-lg text-sm font-semibold">
                                         <div className="h-2 w-2 rounded-full bg-blue-600" />
                                         {item}
                                     </li>
@@ -171,59 +167,59 @@ const JobsPage = () => {
                     </div>
 
                     {/* Right Side: Information Sidebar */}
-                    <div className="space-y-6">
-                        <div className="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm sticky top-24">
+                    <div className="space-y-2">
+                        <div className="bg-white p-4 md:p-8 rounded border border-gray-100 shadow-sm sticky top-24">
                             <h3 className="font-bold text-gray-900 text-xl mb-8 border-b pb-4">Job Summary</h3>
 
                             <div className="space-y-8">
                                 <div className="flex items-center gap-4">
-                                    <div className="h-12 w-12 rounded-2xl bg-green-50 flex items-center justify-center text-green-600">
-                                        <IndianRupee size={24} />
+                                    <div className="md:h-12 h-8 md:w-12 w-8 rounded-2xl bg-green-50 flex items-center justify-center text-green-600">
+                                        <IndianRupee size={16} />
                                     </div>
                                     <div>
                                         <p className="text-xs text-gray-400 font-bold uppercase tracking-widest">Annual Salary</p>
-                                        <p className="font-extrabold text-gray-900 text-lg">
+                                        <p className="font-extrabold text-gray-900 md:text-lg text-sm">
                                             ₹{parseFloat(job?.salary?.toString() || '0').toLocaleString()}
                                         </p>
                                     </div>
                                 </div>
 
                                 <div className="flex items-center gap-4">
-                                    <div className="h-12 w-12 rounded-2xl bg-blue-50 flex items-center justify-center text-blue-600">
-                                        <Briefcase size={24} />
+                                    <div className="md:h-12 h-8 md:w-12 w-8 rounded-2xl bg-blue-50 flex items-center justify-center text-blue-600">
+                                        <Briefcase size={16} />
                                     </div>
                                     <div>
                                         <p className="text-xs text-gray-400 font-bold uppercase tracking-widest">Job Type</p>
-                                        <p className="font-extrabold text-gray-900 text-lg">{job.job_type}</p>
+                                        <p className="font-extrabold text-gray-900 md:text-lg text-sm">{job.job_type}</p>
                                     </div>
                                 </div>
 
                                 <div className="flex items-center gap-4">
-                                    <div className="h-12 w-12 rounded-2xl bg-purple-50 flex items-center justify-center text-purple-600">
-                                        <Users size={24} />
+                                    <div className="md:h-12 h-8 md:w-12 w-8 rounded-2xl bg-purple-50 flex items-center justify-center text-purple-600">
+                                        <Users size={16} />
                                     </div>
                                     <div>
                                         <p className="text-xs text-gray-400 font-bold uppercase tracking-widest">Openings</p>
-                                        <p className="font-extrabold text-gray-900 text-lg">
+                                        <p className="font-extrabold text-gray-900 md:text-lg text-sm">
                                             {Math.floor(Number(job.openings))} Position(s)
                                         </p>
                                     </div>
                                 </div>
 
                                 <div className="flex items-center gap-4">
-                                    <div className="h-12 w-12 rounded-2xl bg-orange-50 flex items-center justify-center text-orange-600">
-                                        <Clock size={24} />
+                                    <div className="md:h-12 h-8 md:w-12 w-8 rounded-2xl bg-orange-50 flex items-center justify-center text-orange-600">
+                                        <Clock size={16} />
                                     </div>
                                     <div>
                                         <p className="text-xs text-gray-400 font-bold uppercase tracking-widest">Setup</p>
-                                        <p className="font-extrabold text-gray-900 text-lg">{job.work_location}</p>
+                                        <p className="font-extrabold text-gray-900 md:text-lg text-sm">{job.work_location}</p>
                                     </div>
                                 </div>
                             </div>
 
                             <hr className="my-8 border-gray-100" />
 
-                            <div className="bg-gray-50 p-6 rounded-2xl">
+                            <div className="bg-gray-50 md:p-6 p-3 rounded">
                                 <h4 className="font-bold text-gray-900 mb-2">Recruiter Info</h4>
                                 <p className="text-sm text-gray-500 leading-tight">
                                     ID: #{job.posted_by_recruiter_id} <br />
