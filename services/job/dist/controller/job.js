@@ -32,6 +32,7 @@ export const createCompany = TryCatch(async (req, res, next) => {
     const { data } = await axios.post(`${process.env.UPLOAD_SERVICE}/api/utils/upload`, {
         buffer: fileBuffer?.content
     });
+    // @ts-expect-error
     const [naewCompany] = await sql `INSERT INTO companies (name,description,website,logo,logo_public_id,recruiter_id) VALUES (${name},${description},${website},${data?.url},${data?.public_id},${req?.user?.user_id}) RETURNING * `;
     res.json({ message: "Company created successfully!", naewCompany });
 });
