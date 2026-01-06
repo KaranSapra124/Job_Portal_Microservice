@@ -1,237 +1,191 @@
-```markdown
-# 🧑‍💼 Microservices Job Portal
+MICROSERVICES JOB PORTAL SYSTEM
+Overview
 
-A scalable **Job Portal application** built using a **microservices architecture**. The platform allows recruiters to post jobs and candidates to apply for them, while services communicate asynchronously using **Kafka**. The system is designed for scalability, maintainability, and independent deployment of services.
+The Microservices Job Portal is a scalable, enterprise-grade web application designed to support job postings, candidate applications, and recruiter workflows. The system is implemented using a distributed microservices architecture that emphasizes scalability, maintainability, fault isolation, and independent service deployment.
 
----
+The application leverages asynchronous, event-driven communication using Apache Kafka and follows modern backend and frontend development best practices. Each service is independently developed, deployed, and maintained, enabling rapid iteration and horizontal scaling.
 
-## 📌 Features
+Core Capabilities
 
-- User authentication and authorization
-- Job posting and job listing
-- Job application management
-- Event-driven notifications
-- Independent microservices
-- Dockerized development environment
+• Secure user authentication and authorization
+• Recruiter job posting and job lifecycle management
+• Candidate job search and application submission
+• Asynchronous event-driven notification processing
+• Independent and loosely coupled backend services
+• Containerized local and production-ready environments
 
----
+Technology Stack
 
-## 🚀 Tech Stack
+Frontend
+• Next.js
+• React
+• Node.js
 
-### Frontend
-- Next.js
-- React
-- Node.js
+Backend
+• Node.js
+• Express.js
+• PostgreSQL
+• Apache Kafka
 
-### Backend
-- Node.js
-- Express.js
-- PostgreSQL
-- Apache Kafka
+Infrastructure & DevOps
+• Docker
+• Docker Compose
 
-### DevOps & Infrastructure
-- Docker
-- Docker Compose
+System Architecture
 
----
+The system is designed using a microservices-based architecture, where each business capability is encapsulated within its own service. Services communicate asynchronously through Kafka, ensuring loose coupling and high fault tolerance.
 
-## 🧩 Architecture Overview
+Each microservice:
+• Runs as an independent Node.js application
+• Owns its own database or schema
+• Communicates exclusively via APIs or Kafka events
+• Can be deployed and scaled independently
 
-The application is built using a **microservices architecture** where each service is isolated and independently runnable. Services communicate via **Kafka** for asynchronous, event-driven workflows.
+High-level project structure:
 
-```
-
-job-portal/
+job-portal
 │
-├── frontend/                     # Next.js frontend
+├── frontend
+│ └── Next.js client application
 │
-├── backend/
-│   ├── auth-service/             # Authentication & authorization
-│   ├── user-service/             # User profiles (candidates & recruiters)
-│   ├── job-service/              # Job postings & listings
-│   ├── application-service/      # Job applications
-│   ├── notification-service/     # Notifications using Kafka
+├── backend
+│ ├── auth-service (Authentication & Authorization)
+│ ├── user-service (User profile management)
+│ ├── job-service (Job posting and discovery)
+│ ├── application-service (Job application processing)
+│ └── notification-service (Event-driven notifications)
 │
 ├── docker-compose.yml
-└── README.md
+└── README
 
-````
+Prerequisites
 
----
+The following software must be installed prior to running the system:
 
-## ⚙️ Prerequisites
+• Node.js (v18 or later)
+• npm
+• Docker
+• Docker Compose
+• PostgreSQL
+• Apache Kafka
 
-Make sure you have the following installed:
+Local Development Setup
 
-- Node.js (v18 or higher)
-- npm
-- Docker
-- Docker Compose
-- PostgreSQL
-- Apache Kafka
+Clone the repository
 
----
-
-## 📦 Installation & Setup
-
-### 1️⃣ Clone the Repository
-
-```bash
 git clone https://github.com/your-username/microservices-job-portal.git
+
 cd microservices-job-portal
-````
 
----
+Frontend Execution
 
-## 🖥️ Running the Frontend
+Navigate to the frontend directory and start the Next.js application:
 
-```bash
 cd frontend
 npm install
 npm run dev
-```
 
-The frontend will be available at:
-
-```
+The frontend will be accessible at:
 http://localhost:3000
-```
 
----
+Backend Services Execution
 
-## 🔧 Running Backend Services (Local Development)
+Each backend service is executed independently.
 
-Each backend service runs independently and has its own configuration.
+Example: Authentication Service
 
-Example (Auth Service):
-
-```bash
 cd backend/auth-service
 npm install
 npm run dev
-```
 
-Repeat the same steps for:
+Repeat the same process for all other services:
 
-* user-service
-* job-service
-* application-service
-* notification-service
+• user-service
+• job-service
+• application-service
+• notification-service
 
-Each service runs on its own port defined in its `.env` file.
+Each service exposes its own REST API and runs on a dedicated port defined in its environment configuration.
 
----
+Containerized Execution (Recommended)
 
-## 🐳 Running with Docker (Recommended)
+To run the complete system using Docker:
 
-To start all services together:
-
-```bash
 docker-compose up --build
-```
 
-This will start:
+This will initialize:
+• All backend microservices
+• PostgreSQL database
+• Kafka and Zookeeper
+• Service networking and dependencies
 
-* All backend microservices
-* PostgreSQL database
-* Kafka and Zookeeper
-* Required networking between services
+Event-Driven Communication (Kafka)
 
----
+Apache Kafka is used to enable asynchronous communication between services.
 
-## 🔄 Kafka Event Flow
+Typical events include:
+• USER_CREATED
+• JOB_POSTED
+• APPLICATION_SUBMITTED
 
-Kafka is used for asynchronous communication between services.
+Event workflow:
 
-### Example Events
+A producer service publishes an event to Kafka
 
-* `USER_CREATED`
-* `JOB_POSTED`
-* `APPLICATION_SUBMITTED`
+One or more consumer services subscribe to the event
 
-### Flow
+Consumers process the event independently
 
-1. A service publishes an event to Kafka
-2. Other interested services consume the event
-3. Services react independently without tight coupling
+This approach improves system resilience, scalability, and decoupling.
 
----
+Database Strategy
 
-## 🗄️ Database Design
+• PostgreSQL is used as the primary datastore
+• Each microservice maintains ownership of its data
+• No direct database access across services
+• Schema evolution and migrations are managed per service
 
-* PostgreSQL is used as the primary database
-* Each microservice:
+Environment Configuration
 
-  * Owns its own database or schema
-  * Manages its own models and migrations
-* No direct database access between services
+Each service contains an isolated environment configuration file.
 
----
+Example configuration:
 
-## 🧪 Common NPM Scripts
-
-Used across frontend and backend services:
-
-```bash
-npm run dev     # Run service in development mode
-npm start       # Run service in production mode
-npm test        # Run tests (if configured)
-```
-
----
-
-## 🔐 Environment Variables
-
-Each service has its own `.env` file.
-
-Example:
-
-```
 PORT=4000
-DATABASE_URL=postgresql://user:password@localhost:5432/dbname
+DATABASE_URL=Your neondb url
 KAFKA_BROKER=localhost:9092
-JWT_SECRET=your_secret_key
-```
+JWT_SECRET=secure_secret_key
 
-⚠️ **Important:**
-Do not commit `.env` files to version control.
+Sensitive configuration files must not be committed to source control.
 
----
+Common Development Commands
 
-## 📈 Future Enhancements
+npm run dev – Start service in development mode
+npm start – Start service in production mode
+npm test – Execute automated tests (if available)
 
-* API Gateway
-* Role-Based Access Control (RBAC)
-* Advanced job search and filtering
-* GraphQL support
-* CI/CD pipelines
-* Kubernetes deployment
-* Monitoring and logging (Prometheus, Grafana)
+Planned Enhancements
 
----
+• API Gateway integration
+• Role-based access control (RBAC)
+• Advanced job search and filtering
+• GraphQL support
+• CI/CD pipeline integration
+• Kubernetes orchestration
+• Centralized logging and monitoring
 
-## 🤝 Contributing
+Contribution Guidelines
 
-Contributions are welcome!
+Contributions are welcome and encouraged.
 
-1. Fork the repository
-2. Create a new feature branch
-3. Commit your changes
-4. Open a pull request
+Fork the repository
 
----
+Create a feature or bug-fix branch
 
-## 📄 License
+Commit changes with clear messages
 
-This project is licensed under the **MIT License**.
+Submit a pull request for review
 
----
+License
 
-## 📬 Contact
-
-For questions or suggestions, feel free to open an issue or submit a pull request.
-
-Happy coding 🚀
-
-Just let me know 😊
-```
+This project is licensed under the MIT License.
